@@ -23,14 +23,23 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 # ─── Email ───
 EMAIL_SENDER = os.getenv("EMAIL_SENDER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
-EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+
+# Multiple receivers: comma-separated in .env
+# e.g. EMAIL_RECEIVERS=alice@gmail.com,bob@gmail.com,charlie@gmail.com
+_raw_receivers = os.getenv("EMAIL_RECEIVERS", os.getenv("EMAIL_RECEIVER", ""))
+EMAIL_RECEIVERS = [e.strip() for e in _raw_receivers.split(",") if e.strip()]
 
 # ─── API Endpoints (all from .env) ───
 MMI_API = os.getenv("MMI_API")
 QUOTES_API = os.getenv("QUOTES_API")
 IPO_API = os.getenv("IPO_API")
+NCD_IPO_API = os.getenv("NCD_IPO_API")
+NCD_IPO_TOKEN = os.getenv("NCD_IPO_TOKEN")
+SECONDARY_BONDS_API = os.getenv("SECONDARY_BONDS_API")
+PRECIOUS_METALS_API = os.getenv("PRECIOUS_METALS_API")
+US_FEAR_GREED_API = os.getenv("US_FEAR_GREED_API")
 
 # ─── Watchlist (from .env) ───
 # Format in .env: TICKERS=SID:Display Name,SID:Display Name,...

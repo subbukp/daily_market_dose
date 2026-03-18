@@ -17,4 +17,4 @@ def get_investable_bonds() -> list:
     return httpx.get("http://localhost:8005/bonds").json()
 
 if __name__ == "__main__":
-    mcp.run(transport="streamable-http", host="0.0.0.0", port=8006)
+    mcp.run(transport="streamable-http", host="0.0.0.0", port=8006, path="/market-mcp/mcp/")

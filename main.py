@@ -13,6 +13,8 @@ Usage:
 import sys
 import os
 import argparse
+from fastapi import FastAPI
+from fastapi_mcp import FastApiMCP
 
 # Ensure project root is in path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +25,9 @@ from notifications.telegram_notifier import send_telegram
 from notifications.email_notifier import send_email
 from healthcheck import save_run_status, run_health_check, print_health_report, send_heartbeat_telegram
 from config.settings import CHANNEL_TELEGRAM, CHANNEL_EMAIL
+from data.sources import fetch_mmi, fetch_secondary_bonds
 
+app = FastAPI(title="Market data", version="1.0.0")
 
 def daily_job(dry_run: bool = False):
     """Fetch market data and send notifications."""
@@ -125,8 +129,27 @@ def main():
         return
 
     daily_job(dry_run=args.test)
+    
+    
+@app.get('/') 
+def root():
+    return {"message": "Hello world!"}
 
+#@app.get('/mmi', operation_id="get_mood_indicator", summary="Get the Market Mood Index")
+@app.get('/mmi')
+def mood_indicator():
+    return fetch_mmi()
+    
+#@app.get('/bonds', operation_id="get_investable_bonds", summary="Get investable secondary bonds")
+@app.get('/bonds')
+def investable_bonds():
+    return fetch_secondary_bonds()
+    
+    
+mcp = FastApiMCP(app)
+mcp.mount()
 
 if __name__ == "__main__":
-    main()
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8005)
 

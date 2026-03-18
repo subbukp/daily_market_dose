@@ -146,6 +146,11 @@ def investable_bonds():
     return fetch_secondary_bonds()
     
     
+@app.get('/send-mail')
+def send_mail():
+    main()
+    return({'Message': 'method called'})
+    
 mcp = FastApiMCP(app)
 mcp.mount()
 

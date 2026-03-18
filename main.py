@@ -131,22 +131,22 @@ def main():
     daily_job(dry_run=args.test)
     
     
-@app.get('/') 
+@app.get('/market') 
 def root():
     return {"message": "Hello world!"}
 
 #@app.get('/mmi', operation_id="get_mood_indicator", summary="Get the Market Mood Index")
-@app.get('/mmi')
+@app.get('/market/mmi')
 def mood_indicator():
     return fetch_mmi()
     
 #@app.get('/bonds', operation_id="get_investable_bonds", summary="Get investable secondary bonds")
-@app.get('/bonds')
+@app.get('/market/bonds')
 def investable_bonds():
     return fetch_secondary_bonds()
     
     
-@app.get('/send-mail')
+@app.get('/market/send-mail')
 def send_mail():
     main()
     return({'Message': 'method called'})

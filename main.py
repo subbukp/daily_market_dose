@@ -143,7 +143,7 @@ def mood_indicator():
 #@app.get('/bonds', operation_id="get_investable_bonds", summary="Get investable secondary bonds")
 @app.get('/market/bonds')
 def investable_bonds():
-    return fetch_secondary_bonds()
+    return fetch_secondary_bonds(top_n=25, filter=False)
     
     
 @app.get('/market/send-mail')

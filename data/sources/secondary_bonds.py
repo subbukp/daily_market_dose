@@ -75,7 +75,7 @@ def _is_trusted_a_series(agency: str, rating: str) -> bool:
     return rank is not None and rank <= MINIMUM_RATING_RANK
 
 
-def fetch_secondary_bonds(top_n: int = 5) -> List[BondData]:
+def fetch_secondary_bonds(top_n: int = 5, filter: bool = True) -> List[BondData]:
     """Fetch top secondary market bonds from IndiaBonds, sorted by yield."""
     if not SECONDARY_BONDS_API:
         print("⏭️  Secondary Bonds skipped — SECONDARY_BONDS_API not set in .env")
@@ -100,15 +100,16 @@ def fetch_secondary_bonds(top_n: int = 5) -> List[BondData]:
             agency = b.get("rating_agency", "")
             rating = b.get("rating", "")
 
-            # ── Filter 1: Minimum yield ──
-            if yield_pct < MIN_YIELD_PCT:
-                skipped += 1
-                continue
+            if filter:
+                # ── Filter 1: Minimum yield ──
+                if yield_pct < MIN_YIELD_PCT:
+                    skipped += 1
+                    continue
 
-            # ── Filter 2: Trusted agency + A-series rating ──
-            if not _is_trusted_a_series(agency, rating):
-                skipped += 1
-                continue
+                # ── Filter 2: Trusted agency + A-series rating ──
+                if not _is_trusted_a_series(agency, rating):
+                    skipped += 1
+                    continue
 
             # ── Passed filters ──
             name = b.get("issuer_name", "Unknown")
@@ -135,6 +136,7 @@ def fetch_secondary_bonds(top_n: int = 5) -> List[BondData]:
                 interest_freq=freq.title(),
                 secured=security_type.lower() == "secured",
             ))
+            
 
             if len(bonds) >= top_n:
                 break

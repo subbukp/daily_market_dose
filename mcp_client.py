@@ -1,11 +1,20 @@
+from fastmcp.client.transports.stdio import NodeStdioTransport, PythonStdioTransport
+
+
+from fastmcp.client.transports.sse import SSETransport
+
+
+from fastmcp.client.transports.http import StreamableHttpTransport
+
+
 import asyncio
 import json
 from fastmcp import Client, FastMCP
 
 server = FastMCP("TestServer")
 
-client = Client("https://corps-duty-morgan-quantities.trycloudflare.com/mcp")
-
+client = Client[PythonStdioTransport | NodeStdioTransport | SSETransport | StreamableHttpTransport]("https://misapprehensively-fleshliest-michelina.ngrok-free.dev/market-mcp/mcp")
+#client = Client("https://mcp.swiggy.com/im")
 async def main():
     async with client:
         await client.ping()

@@ -25,7 +25,7 @@ from notifications.telegram_notifier import send_telegram
 from notifications.email_notifier import send_email
 from healthcheck import save_run_status, run_health_check, print_health_report, send_heartbeat_telegram
 from config.settings import CHANNEL_TELEGRAM, CHANNEL_EMAIL
-from data.sources import fetch_mmi, fetch_secondary_bonds
+from data.sources import fetch_mmi, fetch_secondary_bonds, fetch_us_fear_greed, fetch_ipos, fetch_precious_metals
 
 app = FastAPI(title="Market data", version="1.0.0")
 
@@ -130,7 +130,6 @@ def main():
 
     daily_job(dry_run=args.test)
     
-    
 @app.get('/market') 
 def root():
     return {"message": "Hello world!"}
@@ -145,16 +144,26 @@ def mood_indicator():
 def investable_bonds():
     return fetch_secondary_bonds(top_n=25, filter=False)
     
-    
 @app.get('/market/send-mail')
 def send_mail():
     main()
     return({'Message': 'method called'})
     
+@app.get('/market/us-index')
+def us_index():
+    return fetch_us_fear_greed()
+@app.get('/market/metals')
+def metals():
+    return fetch_precious_metals()
+
+@app.get('/market/ipo')
+def ipo():
+    return fetch_ipos()
+
 mcp = FastApiMCP(app)
 mcp.mount()
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8005)
+    uvicorn.run('main:app', host="0.0.0.0", port=8005, reload=True)
 

@@ -210,7 +210,7 @@ def fetch_ipos() -> List[IPOData]:
             all_ipos.append(ipo)
 
             # ── Apply filters: GMP >= 20% AND rating >= 2 fires ──
-            if gmp_pct >= MIN_GMP_PERCENT and fire_rating >= MIN_FIRE_RATING:
+            if gmp_pct >= MIN_GMP_PERCENT and fire_rating >= MIN_FIRE_RATING and is_open:
                 filtered.append(ipo)
             else:
                 skipped += 1

@@ -1,2 +1,2 @@
-45 7 * * 1-5 /home/ps/daily_market_dose/.venv/bin/python3.12 /home/ps/daily_market_dose/main.py > /tmp/cron_mkt_logs.log 2>&1
+45 7 * * 1-5 curl https://misapprehensively-fleshliest-michelina.ngrok-free.dev/market/send-mail > /tmp/cron_mkt_logs.log 2>&1
 @reboot bash /home/ps/utils/start_service.sh

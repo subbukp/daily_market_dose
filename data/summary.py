@@ -6,6 +6,7 @@ and generates actionable summary points.
 """
 
 from typing import Dict, List
+from datetime import datetime
 
 
 def generate_summary(data: Dict) -> List[str]:
@@ -207,7 +208,14 @@ def generate_summary(data: Dict) -> List[str]:
 
     # ─── 5. IPO signals ───
     if ipos:
-        hot_ipos = [i for i in ipos if i.gmp_percent >= 20]
+        today = datetime.now()
+        def _is_open(close_str: str) -> bool:
+            try:
+                close_dt = datetime.strptime(close_str, "%d-%b").replace(year=today.year)
+                return close_dt >= today.replace(hour=0, minute=0, second=0, microsecond=0)
+            except (ValueError, TypeError):
+                return False
+        hot_ipos = [i for i in ipos if i.gmp_percent >= 20 and _is_open(i.close_date)]
         if hot_ipos:
             names = ", ".join(i.company for i in hot_ipos)
             insights.append(f"🔥 Hot IPOs with 20%+ GMP: *{names}* — strong listing expected.")

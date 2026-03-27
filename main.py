@@ -15,7 +15,7 @@ import os
 import argparse
 from fastapi import FastAPI
 from fastapi_mcp import FastApiMCP
-
+from urls import router
 # Ensure project root is in path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -28,6 +28,7 @@ from config.settings import CHANNEL_TELEGRAM, CHANNEL_EMAIL
 from data.sources import fetch_mmi, fetch_secondary_bonds, fetch_us_fear_greed, fetch_ipos, fetch_precious_metals
 
 app = FastAPI(title="Market data", version="1.0.0")
+app.include_router(router)
 
 def daily_job(dry_run: bool = False):
     """Fetch market data and send notifications."""

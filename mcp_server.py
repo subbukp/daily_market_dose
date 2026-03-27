@@ -32,6 +32,14 @@ def get_ipo_data():
     """Get ipo data of Indian market"""
     return httpx.get("http://localhost:8005/market/ipo").json()
 
+@mcp.tool()
+def get_company_research_link(company_id:int):
+    """Get any pdf or presentation regarding company 
+    to do further research using company related documnets
+    like independent research bodies and company presentations"""
+    return httpx.get(f"http://localhost:8005/market/equity/reports/{company_id}')")
+
+
 async def main():
     await mcp.run_http_async(transport="streamable-http", host="0.0.0.0", port=8006, path="/market-mcp/mcp/")
 

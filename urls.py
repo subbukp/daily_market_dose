@@ -3,4 +3,4 @@ from equity import urls
 
 router = APIRouter()
 
-router.include_router(urls.router, prefix="/market/equity", tags=["equity"])
+router.include_router(urls.router, prefix="/market", tags=["equity"])

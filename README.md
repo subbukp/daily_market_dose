@@ -1,4 +1,4 @@
-# RPi Market Notifier
+# Market Notifier
 
 A Python application that aggregates real-time Indian market data from multiple sources and delivers daily notifications via Telegram and Email. Built with FastAPI, it also exposes REST endpoints and an MCP server for AI assistant integration.
 
@@ -95,7 +95,7 @@ flowchart LR
 ## Project Structure
 
 ```
-RPi_market/
+Market-Notifier/
 ├── main.py                  # FastAPI app, daily job orchestrator, CLI entry point
 ├── scheduler.py             # APScheduler cron runner + health endpoint
 ├── healthcheck.py           # System health checks & heartbeat

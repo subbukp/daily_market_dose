@@ -138,8 +138,9 @@ def _get_fy() -> tuple:
     return year, fy, month
 
 
-def fetch_ipos() -> List[IPOData]:
-    """Fetch IPOs with GMP data from InvestorGain. Filters by GMP% and rating."""
+def fetch_ipos(filter) -> List[IPOData]:
+    """Fetch IPOs with GMP data from InvestorGain. Filters by GMP% and rating.
+    filter here is to filter ipo with >20% GMP and open"""
     if not IPO_API:
         print("⏭️  IPO skipped — IPO_API not set in .env")
         return []
@@ -210,10 +211,13 @@ def fetch_ipos() -> List[IPOData]:
             all_ipos.append(ipo)
 
             # ── Apply filters: GMP >= 20% AND rating >= 2 fires ──
-            if gmp_pct >= MIN_GMP_PERCENT and fire_rating >= MIN_FIRE_RATING and is_open:
+            if filter:
+                if gmp_pct >= MIN_GMP_PERCENT and fire_rating >= MIN_FIRE_RATING and is_open:
+                    filtered.append(ipo)
+                else:
+                    skipped += 1
+            elif is_open:
                 filtered.append(ipo)
-            else:
-                skipped += 1
 
         # Sort: open first, then upcoming, then by GMP% descending
         filtered.sort(key=lambda x: (not x.is_open, not x.is_upcoming, -x.gmp_percent))

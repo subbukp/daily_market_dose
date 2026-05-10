@@ -36,7 +36,7 @@ def fetch_all_data() -> Dict:
         "us_fg": fetch_us_fear_greed(),
         "quotes": fetch_quotes(all_sids),
         "metals": fetch_precious_metals(),
-        "ipos": fetch_ipos(),
+        "ipos": fetch_ipos(filter=True),
         "ncds": fetch_ncds(),
         "bonds": fetch_secondary_bonds(),
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),

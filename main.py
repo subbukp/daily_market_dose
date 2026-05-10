@@ -14,6 +14,7 @@ import sys
 import os
 import argparse
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi_mcp import FastApiMCP
 from urls import router
 # Ensure project root is in path
@@ -28,6 +29,14 @@ from config.settings import CHANNEL_TELEGRAM, CHANNEL_EMAIL
 from data.sources import fetch_mmi, fetch_secondary_bonds, fetch_us_fear_greed, fetch_ipos, fetch_precious_metals
 
 app = FastAPI(title="Market data", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://deviative-vermivorous-alton.ngrok-free.dev/", "wss://deviative-vermivorous-alton.ngrok-free.dev/"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
+
 app.include_router(router)
 
 def daily_job(dry_run: bool = False):
@@ -159,7 +168,7 @@ def metals():
 
 @app.get('/market/ipo')
 def ipo():
-    return fetch_ipos()
+    return fetch_ipos(filter=False)
 
 mcp = FastApiMCP(app)
 mcp.mount()

@@ -36,12 +36,10 @@ async def reports(company_id: int, path: str):
             raise HTTPException(status_code=400, detail=f"Invalid endpoint: {path}")
         separator = "&" if "?" in endpoint else "?"
         url = f"{baseurl}{endpoint}{separator}companyId={company_id}"
-        print(url)
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(url)
             response.raise_for_status()
             return JSONResponse(
-            status_code=response.status_code,  
             content=response.json()
         )
     except httpx.HTTPError as e:

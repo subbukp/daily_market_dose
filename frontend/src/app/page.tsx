@@ -7,14 +7,14 @@ export const revalidate = 300;
 
 const navCards = [
   {
-    href: "/market/bonds",
+    href: "/bonds",
     label: "Secondary Bonds",
     desc: "Top-rated bonds with yield ≥ 10%, A− and above",
     icon: "📈",
     accent: "border-l-emerald-500",
   },
   {
-    href: "/market/ipo",
+    href: "/ipo",
     label: "IPO Listings",
     desc: "Upcoming and active IPO opportunities",
     icon: "🏢",

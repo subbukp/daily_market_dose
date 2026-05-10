@@ -21,3 +21,8 @@ tmux send-keys -t market "/home/ps/daily_market_dose/.venv/bin/python3.12 /home/
 tmux new-session -d -s mcp
 sleep 1
 tmux send-keys -t mcp "/home/ps/daily_market_dose/.venv/bin/python3.12 /home/ps/daily_market_dose/mcp_server.py" Enter
+
+# session 4: frontend
+tmux new-session -d -s frontend
+sleep 1
+tmux send-keys -t frontend "cd /home/ps/daily_market_dose/frontend/ && npm ci && npm run build && npm run start" Enter

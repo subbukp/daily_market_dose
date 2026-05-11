@@ -32,7 +32,7 @@ app = FastAPI(title="Market data", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://deviative-vermivorous-alton.ngrok-free.dev/", "wss://deviative-vermivorous-alton.ngrok-free.dev/"],
+    allow_origins= os.environ.get("CORS_URL"),
     allow_methods=["GET"],
     allow_headers=["*"],
 )

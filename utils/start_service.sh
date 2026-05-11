@@ -25,4 +25,4 @@ tmux send-keys -t mcp "/home/ps/daily_market_dose/.venv/bin/python3.12 /home/ps/
 # session 4: frontend
 tmux new-session -d -s frontend
 sleep 1
-tmux send-keys -t frontend "cd /home/ps/daily_market_dose/frontend/ && npm ci && npm run build && npm run start" Enter
+tmux send-keys -t frontend "nvm use 23.10.0 && cd /home/ps/daily_market_dose/frontend/ && npm ci && npm run build && npm run start" Enter
